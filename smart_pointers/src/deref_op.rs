@@ -1,7 +1,5 @@
 use std::ops::Deref;
 
-
-
 pub fn main() {
     let x = 12;
     let y = &x;
@@ -18,15 +16,13 @@ pub fn main() {
     let c: &String = &b; // MyBox::deref() allows to convert to &String
     let d: &str = &b; // String::deref() allows to convert o &str
     assert_eq!(c, d);
-    
 }
 
 struct MyBox<T>(T);
 
-impl<T> MyBox<T>{
+impl<T> MyBox<T> {
     fn new(x: T) -> MyBox<T> {
         MyBox(x)
-        
     }
 }
 
@@ -34,6 +30,6 @@ impl<T> Deref for MyBox<T> {
     type Target = T;
 
     fn deref(&self) -> &Self::Target {
-        &self.0  // return reference, b.c. compiler can derefernce only `&` references
+        &self.0 // return reference, b.c. compiler can derefernce only `&` references
     } // if we returned value directly, it would be dropped from struct
 }

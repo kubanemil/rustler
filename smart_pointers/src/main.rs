@@ -3,14 +3,15 @@ mod box_pointer;
 mod deref_op;
 mod drop_op;
 mod rc_pointer;
-
+mod ref_cell;
 
 fn main() {
     let mut programs: HashMap<&str, fn()> = HashMap::new();
-    programs.insert("box", box_pointer::main);
-    programs.insert("deref", deref_op::main);
-    programs.insert("drop", drop_op::main);
-    programs.insert("rc", rc_pointer::main);
+    programs.insert("box_pointer", box_pointer::main);
+    programs.insert("deref_op", deref_op::main);
+    programs.insert("drop_op", drop_op::main);
+    programs.insert("rc_pointer", rc_pointer::main);
+    programs.insert("ref_cell", ref_cell::main);
 
     let args: Vec<String> = env::args().collect();
     println!("{:?}", args);
