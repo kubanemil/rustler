@@ -1,11 +1,11 @@
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
 fn main() {
     // create
     let mut ages: HashMap<String, i32> = HashMap::new(); // always annotate
     let (me, my_age) = ("Emil".to_string(), 777); // 'me' wil be owned by hashmap
     ages.insert(me, my_age); // insert(key, value)
-    // dbg!(me); dbg!(my_age); // 'me' is moved. 'my_age' is copied
+                             // dbg!(me); dbg!(my_age); // 'me' is moved. 'my_age' is copied
     ages.insert("Guts".to_string(), 25);
     ages.insert("Dio".to_string(), 120);
     dbg!(&ages);
@@ -17,10 +17,11 @@ fn main() {
     // iterate
     for (k, v) in &ages {
         println!("key: `{k}` - value: `{v}`")
-    };
+    }
 
     // update value
-    ages.insert("Emil".to_string(), 20); dbg!(&ages);
+    ages.insert("Emil".to_string(), 20);
+    dbg!(&ages);
 
     // insert a new key, if no old key
     ages.entry("Guts".to_string()).or_insert(777);
@@ -28,10 +29,9 @@ fn main() {
     dbg!(&ages);
 
     // iterative update
-    for (k, v) in &mut ages {
+    for v in ages.values_mut() {
         *v -= 25;
         // *k = *k + "-sama"; // can't change key
-    }; dbg!(&ages);
-
-
+    }
+    dbg!(&ages);
 }
