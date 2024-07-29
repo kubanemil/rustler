@@ -5,20 +5,16 @@ Struct
 
 #[derive(Debug)] // so we can use {:?} in println!()
 struct Person {
-    // can't use &str (without lifetime), 
+    // can't use &str (without lifetime),
     // bc if u drop str, then name is dangling pointer
     // also Struct should own its fields' data, not borrow
-    name: String, 
+    name: String,
     age: u8,
     height: i16,
 }
 
 fn main() {
-    let user1 = Person::create(
-        "Koichi",
-        15,
-        -15,
-    );
+    let user1 = Person::create("Koichi", 15, -15);
     user1.present();
 
     // if variable has same name as attribute, u can use shorthand:
@@ -39,21 +35,21 @@ fn main() {
     user3.height = 176; // entire instance should be mutable
     user3.present();
 
-    let green = RGB(255, 0, 0);
+    let green = Rgb(255, 0, 0);
     green.present();
 
-    let unit = Unit;
+    let _unit = Unit;
 
     println!("{:#?}", user3); // '#' - print with indent ':?' - debug print
-    // also you can print struct with dbg!() macro:
+                              // also you can print struct with dbg!() macro:
     dbg!(user2); // you still need to add derive(Debug) to struct
     let mut mob = Person::create_mob();
     mob.name.push_str(" is A GOAT!");
-    let mob = dbg!(mob); // (returns what u give)
+    let _mob = dbg!(mob); // (returns what u give)
 }
 
 // tuple Struct
-struct RGB(u8, u8, u8);
+struct Rgb(u8, u8, u8);
 
 // unit Struct
 struct Unit;
@@ -62,7 +58,10 @@ struct Unit;
 impl Person {
     // if includes &self - method
     fn present(&self) {
-        println!("{} is {} years old and {} cm tall", self.name, self.age, self.height);
+        println!(
+            "{} is {} years old and {} cm tall",
+            self.name, self.age, self.height
+        );
     }
 
     // not method. call with `Person::create(name, age, height);`
@@ -74,7 +73,8 @@ impl Person {
         }
     }
 }
-impl Person { // can have multiple impl for same struct. No any difference at all.
+impl Person {
+    // can have multiple impl for same struct. No any difference at all.
     // Person::create_mob();
     fn create_mob() -> Self {
         Self {
@@ -85,7 +85,7 @@ impl Person { // can have multiple impl for same struct. No any difference at al
     }
 }
 
-impl RGB {
+impl Rgb {
     fn present(&self) {
         println!("RGB({}, {}, {})", self.0, self.1, self.2);
     }
