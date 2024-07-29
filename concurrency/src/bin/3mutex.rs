@@ -21,7 +21,7 @@ fn main() {
     multithread_mutex();
 }
 
-/* This won't work, because mutex can have only one owner, and value is moved to the 
+/* This won't work, because mutex can have only one owner, and value is moved to the
 first thread, instead of getting shared amoung all threads.
 
 fn multithread_mutex_single_owner() {
@@ -63,9 +63,9 @@ fn multithread_mutex() {
         handle.join().unwrap();
     }
     println!("Result: `{}`", *text_mutex.lock().unwrap())
-} 
+}
 
-// for simple types (int, float), you can use  std::sync::atomic crate 
+// for simple types (int, float), you can use  std::sync::atomic crate
 // to access atomic types - they can be used without `Mutex<T>`.
 
 // Mutex<> is similiar to RefCell<> - it allows to mutate immutable data (interior mutability)

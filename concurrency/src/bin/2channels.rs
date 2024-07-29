@@ -1,5 +1,5 @@
 /*
-Data is sent between threads via - channels. Channel has 2 halves: transmitter and receiver. 
+Data is sent between threads via - channels. Channel has 2 halves: transmitter and receiver.
 Channel is closed if either transmitter or receiver half is dropped.
 tx - transmitter
 rx - receiver
@@ -23,7 +23,8 @@ fn main() {
     let received_messages = rx.recv().unwrap(); // will panic if transmitter is dropped
     println!("Received_message: {:?}\n", received_messages);
 
-    for received in rx { // as iterator, will wait for next message
+    for received in rx {
+        // as iterator, will wait for next message
         println!("received_message: {}\n", received);
     }
 
@@ -35,7 +36,7 @@ fn multi_transmitter() {
     let (tx, rx) = mpsc::channel::<(&str, u8)>();
     let tx2 = tx.clone(); // clone transmitter to use in other thread
 
-    thread::spawn(move || {        
+    thread::spawn(move || {
         for msg in [11, 22, 33] {
             tx.send(("tx", msg)).unwrap();
             thread::sleep(Duration::from_millis(300));

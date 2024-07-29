@@ -7,7 +7,7 @@ fn main() {
 }
 
 fn premature_exiting() {
-    thread::spawn( || {
+    thread::spawn(|| {
         for i in 0..5 {
             println!("premature | spawned thread. #{i}");
             thread::sleep(Duration::from_millis(1));
@@ -23,7 +23,7 @@ fn premature_exiting() {
 fn sync_exiting() {
     let mut num = 0;
     // add `move` to closure to use variables outside of it.
-    let handle = thread::spawn( move || {
+    let handle = thread::spawn(move || {
         for i in 0..10 {
             num += num;
             println!("sync | spawned thread. #{i}");
