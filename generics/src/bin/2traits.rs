@@ -14,7 +14,7 @@ trait Rating {
 #[derive(Debug)]
 struct Manga {
     author: String,
-    chapters: u32,
+    _chapters: u32,
     readers: i32,
 }
 
@@ -47,29 +47,29 @@ impl Rating for Book {
     }
 }
 
-// you can specify trat as generic type (T is of type Rating)
+// you can specify generic type with a trait (`T` is of type `Rating`)
 fn is_bestseller<T: Rating>(content: &T) -> bool {
     content.is_good() && content.popularity() > 1.0
 }
 
 // you can add more traits:
-fn is_displayed_bestseller<T: Rating + Display>(content: &T) -> bool {
+fn _is_displayed_bestseller<T: Rating + Display>(content: &T) -> bool {
     content.is_good() && content.popularity() > 1.0
 }
 
 // also we can specify traits for several generics:
-fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
+fn _some_function<T: Display + Clone, U: Clone + Debug>(_t: &T, _u: &U) -> i32 {
     // do something
     0
 }
-// but we can write it with `where` clause:
-fn some_function2<T, U>(t: &T, u: &U) -> i32
+// but we often write traits for generic types with `where` clause:
+fn _some_function2<T, U>(_t: &T, _u: &U) -> i32
 where
     T: Display + Clone,
     U: Clone + Debug,
 {
     // do something
-    0
+    42
 }
 
 fn main() {
@@ -83,7 +83,7 @@ fn main() {
 
     let m1 = Manga {
         author: "Isayama".to_string(),
-        chapters: 122,
+        _chapters: 122,
         readers: 10000000,
     };
     m1.is_good();
@@ -91,7 +91,7 @@ fn main() {
 
     let m2 = Manga {
         author: "ONE".to_string(),
-        chapters: 12,
+        _chapters: 12,
         readers: 100,
     };
     println!("m1 is bestseller: {}", is_bestseller(&m2));

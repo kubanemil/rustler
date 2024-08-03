@@ -5,7 +5,7 @@ fn do_something<T> | struct Person<T>
 And your <T> will represent general type */
 
 // here we don't care about the data type - we will get the last item despite of it
-fn last_item<t>(arr: &[t]) -> &t {
+fn last_item<TheType>(arr: &[TheType]) -> &TheType {
     // usually `T` is used, not `t`.
     let item = &arr[arr.len() - 1];
     item
@@ -27,8 +27,8 @@ fn largest<T: std::cmp::PartialOrd>(arr: &[T]) -> &T {
 #[derive(Debug)]
 struct Point<T> {
     // although T might be any type, both x and y must be of same type
-    x: T,
-    y: T,
+    _x: T,
+    _y: T,
 }
 #[derive(Debug)]
 struct Point2<T, U> {
@@ -40,7 +40,7 @@ struct Point2<T, U> {
 
 // generic type specification after `impl` is neccessary clarification
 impl<T, U> Point2<T, U> {
-    fn x(&self) -> &T {
+    fn _x(&self) -> &T {
         &self.x
     }
 }
@@ -69,7 +69,7 @@ fn main() {
         largest(&bool_arr)
     );
 
-    let p1 = Point { x: 21, y: 93 };
+    let p1 = Point { _x: 21, _y: 93 };
     dbg!(&p1);
     let p2 = Point2 {
         x: 32,
