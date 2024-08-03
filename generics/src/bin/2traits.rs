@@ -7,7 +7,7 @@ trait Rating {
     fn is_good(&self) -> bool {
         // default implementation if not alternative given
         // you can use other methods even if they have no default implementation
-        self.popularity() > 1 as f32 
+        self.popularity() > 1 as f32
     }
 }
 
@@ -15,7 +15,7 @@ trait Rating {
 struct Manga {
     author: String,
     chapters: u32,
-    readers: i32
+    readers: i32,
 }
 
 // you need to implement all Rating's methods for Manga
@@ -31,7 +31,7 @@ impl Rating for Manga {
 struct Book {
     author: String,
     is_classic: bool,
-    number_of_copies: u32
+    number_of_copies: u32,
 }
 
 impl Rating for Book {
@@ -64,9 +64,9 @@ fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 }
 // but we can write it with `where` clause:
 fn some_function2<T, U>(t: &T, u: &U) -> i32
-where 
+where
     T: Display + Clone,
-    U: Clone + Debug
+    U: Clone + Debug,
 {
     // do something
     0
@@ -76,17 +76,23 @@ fn main() {
     let b1 = Book {
         author: "Dostoevsky".to_string(),
         is_classic: true,
-        number_of_copies: 10000
-    }; 
-    b1.is_good(); b1.popularity();
+        number_of_copies: 10000,
+    };
+    b1.is_good();
+    b1.popularity();
 
     let m1 = Manga {
         author: "Isayama".to_string(),
         chapters: 122,
-        readers: 10000000
+        readers: 10000000,
     };
-    m1.is_good(); m1.popularity();
+    m1.is_good();
+    m1.popularity();
 
-    let m2 = Manga { author: "ONE".to_string(), chapters: 12, readers: 100 };
+    let m2 = Manga {
+        author: "ONE".to_string(),
+        chapters: 12,
+        readers: 100,
+    };
     println!("m1 is bestseller: {}", is_bestseller(&m2));
 }

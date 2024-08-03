@@ -1,12 +1,13 @@
 /* Rust always makes you specify the data type, but sometimes
 you don't care what type is, so you should use generics,
 You usually append <T, U, K> to function/struct's name:
-fn do_something<T> | struct Person<T> 
+fn do_something<T> | struct Person<T>
 And your <T> will represent general type */
 
 // here we don't care about the data type - we will get the last item despite of it
-fn last_item<t>(arr: &[t]) -> &t { // usually `T` is used, not `t`. But who said I am usual?
-    let item = &arr[arr.len()-1];
+fn last_item<t>(arr: &[t]) -> &t {
+    // usually `T` is used, not `t`.
+    let item = &arr[arr.len() - 1];
     item
 }
 
@@ -19,17 +20,19 @@ fn largest<T: std::cmp::PartialOrd>(arr: &[T]) -> &T {
         if item > largest {
             largest = item;
         }
-    };
+    }
     largest
 }
 
 #[derive(Debug)]
-struct Point<T> { // although T might be any type, both x and y must be of same type
+struct Point<T> {
+    // although T might be any type, both x and y must be of same type
     x: T,
     y: T,
 }
 #[derive(Debug)]
-struct Point2<T, U> { // if you want to x and y be of different types
+struct Point2<T, U> {
+    // if you want to x and y be of different types
     x: T,
     y: U,
     z: T,
@@ -44,24 +47,41 @@ impl<T, U> Point2<T, U> {
 // if you want to define methods only for 'f32' data type for Point2 struct:
 impl Point2<f32, f32> {
     fn ratio(&self) -> f32 {
-        &self.x/&self.y*&self.z
+        &self.x / &self.y * &self.z
     }
 }
 
-
 fn main() {
-    let int_arr = vec![1,2,3,4,5];
+    let int_arr = vec![1, 2, 3, 4, 5];
     let str_arr = ["one", "two", "three"];
     let bool_arr = [true, true, false, false, true, false];
-    println!("last int, str, bool: ({}, {}, {})", 
-    last_item(&int_arr), last_item(&str_arr), last_item(&bool_arr));
+    println!(
+        "last int, str, bool: ({}, {}, {})",
+        last_item(&int_arr),
+        last_item(&str_arr),
+        last_item(&bool_arr)
+    );
 
-    println!("largest int, str, bool: ({}, {}, {})", 
-    largest(&int_arr), largest(&str_arr), largest(&bool_arr));
+    println!(
+        "largest int, str, bool: ({}, {}, {})",
+        largest(&int_arr),
+        largest(&str_arr),
+        largest(&bool_arr)
+    );
 
-    let p1 = Point {x: 21, y: 93}; dbg!(&p1);
-    let p2 = Point2 {x: 32, y: "Lol", z: 12}; dbg!(&p2);
-    let p3 = Point2 {x: 10.0, y: 4.012, z: 0.129};
+    let p1 = Point { x: 21, y: 93 };
+    dbg!(&p1);
+    let p2 = Point2 {
+        x: 32,
+        y: "Lol",
+        z: 12,
+    };
+    dbg!(&p2);
+    let p3 = Point2 {
+        x: 10.0,
+        y: 4.012,
+        z: 0.129,
+    };
     // p2.ratio(); // ratio is only for Point<f32, f32> type
     p3.ratio();
 }
