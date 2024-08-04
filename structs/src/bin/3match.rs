@@ -56,4 +56,36 @@ fn main() {
         println!("It is second or first class sorcerer")
     }
     // usually need 'if let' to extract value from some enum/struct
+
+    let age = 14;
+    let age_type = match age {
+        0..=12 => "child", // range matching
+        13..20 => "teenager",
+        _ => "adult",
+    };
+    println!("\nThe age type is {age_type}\n");
+
+    let l = 'e';
+    let letter_type = match l {
+        'a'..='d' => "start", // `="d"` means that it includes "d"
+
+        // in range matching, you can assign matched value to variable with @ binding
+        letter @ 'x'..='z' => {
+            println!("end letter is {letter}");
+            "end"
+        }
+        _ => "middle",
+    };
+    println!("The letter's place in ABC is: {letter_type}.\n");
+
+    // Match Guard
+    let x = Some(17);
+    match x {
+        Some(0..=2) => println!("Num is 0, 1 or 2.\n"),
+        Some(num) if num % 2 == 0 => {
+            println!("The number is even.\n");
+        }
+        Some(_) => println!("The number is odd.\n"),
+        None => println!("No number was provided."),
+    }
 }
