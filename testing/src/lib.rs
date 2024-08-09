@@ -6,13 +6,12 @@ fn internal_adder(a: i32, b: i32) -> i32 {
     a + b
 }
 
-
 #[cfg(test)]
 mod tests {
     #[test] // indicates that this is a test function
     fn add_str() {
         let mut s = String::from("Emil");
-        s. push_str(" is cool!");
+        s.push_str(" is cool!");
         assert_eq!(s, "Emil is cool!"); // prints left and right value if error
         assert_ne!(s, "not s for sure"); // should pass ok if left and right are not equal
     }
@@ -23,20 +22,23 @@ mod tests {
         let power = 2;
         for _ in 1..power {
             my_num *= my_num
-        };
+        }
         // panic!("OH MY GOD!!!");
-        assert!(!(my_num == 12+12)); // !true -> false
-        assert!((my_num == 12*12));
+        assert!(!(my_num == 12 + 12)); // !true -> false
+        assert!((my_num == 12 * 12));
         assert!({
-            let to_compare = 12*12;
+            let to_compare = 12 * 12;
             my_num == to_compare
         }); // same as above
 
         // arguments after first one is basically print!()'s arguments:
-        assert!((my_num == 12*12), "Duuuuude, `my_num` is not 12*11, you know?!: {}", my_num);
+        assert!(
+            (my_num == 12 * 12),
+            "Duuuuude, `my_num` is not 12*11, you know?!: {}",
+            my_num
+        );
     }
 }
-
 
 pub struct Adult {
     age: i32,
@@ -47,7 +49,10 @@ impl Adult {
         if age < 18 {
             panic!("You are not adult! {}-years old are not allowed.", age);
         } else if age > 100 {
-            panic!("Maan, normal people don't live up to {} years, you know...", age);
+            panic!(
+                "Maan, normal people don't live up to {} years, you know...",
+                age
+            );
         }
 
         let adult = Adult { age };
@@ -68,7 +73,7 @@ mod panic_tests {
     }
 
     #[test]
-    #[should_panic(expected="jojo is good")] 
+    #[should_panic(expected = "jojo is good")]
     fn adult() {
         Adult::new(35);
         //panic!("jojo is the worst anime."); // will panic bc unexpected
@@ -76,7 +81,7 @@ mod panic_tests {
     }
 
     #[test]
-    #[should_panic(expected="You are not adult!")]
+    #[should_panic(expected = "You are not adult!")]
     fn kid() {
         Adult::new(11);
     }
@@ -86,7 +91,7 @@ mod panic_tests {
 
 #[cfg(test)]
 mod result_tests {
-    use std::{io::Error as IoError, fs::File};
+    use std::{fs::File, io::Error as IoError};
 
     #[test]
     fn it_works_ad_() -> Result<(), String> {
@@ -113,7 +118,7 @@ mod result_tests {
 
 /*
 by default all tests are run parallel. If you want to run it sequential:
-$ cargo test -- --test-threads=1    // don't forget double -- 
+$ cargo test -- --test-threads=1    // don't forget double --
 
 also testing doesn't output your println!() stuff, to output them:
 $ cargo test -- --show-output
@@ -124,7 +129,7 @@ Note, that it will run all test with name 'fn open_absent_file()'
 
 
 if you want to run tests that contain some string:
-$ cargo test ad 
+$ cargo test ad
 In this case, will run tests 'fn adult()', 'fn it_works_ad_()', and 'fn add_str()'
 
 if you want to run tests marked with '#[ignored]':
