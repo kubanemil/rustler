@@ -14,7 +14,7 @@ pub fn main() {
 
     // `Rc::clone(&x)` == `x.clone()`, but we want to distinguish that Rc::clone() is shallow-copy
     // (it will only copy pointer and increase pointer), while in most cases .clone() is deep-copy
-    let _a = Cons(1, Rc::clone(&x));
+    let a = Cons(1, Rc::clone(&x));
     println!("count after creating a = {}", Rc::strong_count(&x));
     let _b = Cons(2, Rc::clone(&x));
     println!("count after creating b = {}", Rc::strong_count(&x));
@@ -23,6 +23,14 @@ pub fn main() {
         println!("count after creating c = {}", Rc::strong_count(&x));
     } // count will go down since c is out of scope
     println!("count final = {}", Rc::strong_count(&x));
+
+    if let Cons(num, pointer_counter) = a {
+        println!(
+            "num: {}, count: {}",
+            num,
+            Rc::strong_count(&pointer_counter)
+        )
+    }
 }
 
 enum List {
