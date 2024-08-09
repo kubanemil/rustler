@@ -1,6 +1,3 @@
-/*
-TCP (Transmission Control Protocol) - defines how data is transfered (but not what is a data),
-HTTP is build on top of TCP, and defines content of transfered data. */
 use std::{
     fs,
     io::{BufRead, BufReader, Write},
@@ -8,19 +5,18 @@ use std::{
     thread,
     time::Duration,
 };
+use webserver::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
-    println!("Listener is created");
+    println!("Multi-threaded listener is created");
+    let pool = ThreadPool::new(4);
 
-    // A stream is a connection between a client and the server.
-    // Will print multiple connection, even if you made one, because browser
-    // makes multiple retries to connect.
-    for stream in listener.incoming() {
+    for stream in listener.incoming().take(3) {
         let stream = stream.unwrap();
         println!("\nConnection is established!");
 
-        handle_connection(stream);
+        pool.execute(|| handle_connection(stream));
     }
 }
 
@@ -45,11 +41,6 @@ fn handle_connection(mut stream: TcpStream) {
 
     let content = fs::read_to_string(filename).unwrap(); // html text
     let len = content.len();
-    /* Response should be in format of:
-        HTTP-Version Status-Code Reason-Phrase CRLF
-        headers CRLF
-        message-body
-    */
     let response = format!("{status_line}\r\nContent-Length: {len}\r\n\r\n{content}");
     stream.write_all(response.as_bytes()).unwrap();
 }
