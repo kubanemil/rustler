@@ -7,11 +7,11 @@ Pointer to heap is in stack, because it's fixed-size
 
 Ownership rules:
 1. Each value has only one owner.
-2. If owner goes to outer scope, value is dropped (from memory). 
+2. If owner goes to outer scope, value is dropped (from memory).
 */
 fn main() {
-    let mut s = "hello"; // string literal (&str) can't be mutable
-    //s.push_str(", world"); // error
+    let s = "hello"; // string literal (&str) can't be mutable
+                     //s.push_str(", world"); // error
     let mut s1 = String::from(s); // String is mutable and dynamic-sized
     s1.push_str(", world");
     println!("|{s}| |{s1}|");
@@ -23,23 +23,23 @@ fn main() {
     println!("{}", name);
 
     /*
-    When you copy a primitive type (bool, int, float), Rust just copies it 
+    When you copy a primitive type (bool, int, float), Rust just copies it
     while assigning to the variable,
     because they are of fixed size and stored in a stack.
     But you can't do this with more complex types (String, Vec), because their
-    size is limitless, which theoretically means infinite size (something like 1TB). 
+    size is limitless, which theoretically means infinite size (something like 1TB).
     And we don't want to copy such a huge variable.
 
     So what Rust does instead, is just gives a pointer from one variable to another.
-    Also, we cannot point 2 pointers to one heap value, because it will create a memory problems. 
+    Also, we cannot point 2 pointers to one heap value, because it will create a memory problems.
     (like if you change one variable, you are changing the second one too)
      */
     let s1 = String::from("Emil info");
     let s2 = s1; // s1 is moved to s2. We call this "MOVE"
-    /*
-    After that, s1 is dropped, so you can't access it anymore. But if you want to copy value
-    (so both s1 and s2 will have copies of value), do .clone() method:
-     */
+                 /*
+                 After that, s1 is dropped, so you can't access it anymore. But if you want to copy value
+                 (so both s1 and s2 will have copies of value), do .clone() method:
+                  */
     let s3 = s2.clone();
     println!("[s1 is null| |s2 is {}| |s3 is {}|\n", s2, s3);
 
@@ -58,7 +58,6 @@ at the end of the scope, instead of borrowing them
 fn take_str(s: String) {
     dbg!(s);
 } // s is dropped here
-
 
 // How scope memory works
 fn scope_memory() {
